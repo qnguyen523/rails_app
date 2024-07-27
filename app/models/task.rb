@@ -13,7 +13,6 @@
 class Task < ApplicationRecord
   scope :not_completed, -> { where(completed: false) }
   enum priority: {
-    no_priority: 0,
     low_priority: 1,
     medium_priority: 2,
     high_priority: 3

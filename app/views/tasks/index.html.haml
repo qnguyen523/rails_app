@@ -3,6 +3,9 @@
     %header
       %h1{style: "font-size: 3.5rem;"} Tasks
   .row#flash
+  .row#create_modal
+    .col-lg-12
+      = link_to 'Create Task', new_task_path, class: 'btn btn-success'
   .row
     .col-lg-12
       .no_class
