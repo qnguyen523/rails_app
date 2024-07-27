@@ -1,0 +1,14 @@
+.container
+  .row
+    %header
+      %h1{style: "font-size: 3.5rem;"} Tasks
+  .row#flash
+  .row#action_bar
+    .col-lg-2
+      = link_to 'Create Task', new_task_path, class: 'btn btn-success'
+    .col-lg-2
+      = link_to 'Back to Home', root_path, class: 'btn btn-primary'
+  .row
+    .col-lg-12
+      %table.table.project-list-table.table-nowrap.align-middle.table-borderless#js-list-table
+        = render 'list_table', list_all: true
