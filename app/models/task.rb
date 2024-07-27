@@ -11,6 +11,7 @@
 #  updated_at :datetime         not null
 #
 class Task < ApplicationRecord
+  validates :title, presence: true
   scope :not_completed, -> { where(completed: false) }
   enum priority: {
     low_priority: 1,

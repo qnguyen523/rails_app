@@ -1,5 +1,7 @@
 .container
-  = form_for Task.new, url: tasks_path, method: :post, remote: true do |f|
+  .row#flash
+    = render 'layouts/flash_success'
+  = form_for @task, url: tasks_path, method: :post, remote: true do |f|
     .row
       .col-sm-6
         = f.label :title
@@ -17,5 +19,7 @@
         = f.label :priority
         = f.select :priority, Task.priorities.keys, {}, class: 'form-control'
     .row.mt-4
-      .col-sm-6.text-center
+      .col-sm-3.text-center
+        = link_to 'Back to Home', root_path, class: 'btn btn-primary'
+      .col-sm-3.text-center
         = f.submit 'Create', class: 'btn btn-success'

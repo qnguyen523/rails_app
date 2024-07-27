@@ -9,23 +9,31 @@ class TasksController < ApplicationController
 
   def create
     new_attributes = {
-      title: create_params[:title],
-      sub_title: create_params[:sub_title],
-      due_date: create_params[:due_date]&.to_datetime&.localtime&.end_of_day,
+      title: create_params[:title].presence,
+      sub_title: create_params[:sub_title].presence,
+      due_date: create_params[:due_date]&.to_datetime&.localtime&.end_of_day || Time.now.end_of_day,
       priority: create_params[:priority]
     }
-    Task.create(new_attributes)
-    redirect_to root_path
+    task = Task.new(new_attributes)
+    if task.save
+      flash[:success] = 'Task created successfully'
+      @tasks = Task.not_completed.order(:id)
+      render 'index'
+    else
+      flash[:error] = 'Error creating task'
+      @task = task
+      render 'new'
+    end
   end
 
   def index
     @tasks = Task.not_completed.order(:id)
-    render 'tasks/index'
+    render 'index'
   end
 
   def list
     @tasks = Task.all.order(:id)
-    render 'tasks/list'
+    render 'list'
   end
 
   def show
@@ -38,7 +46,7 @@ class TasksController < ApplicationController
     task = Task.find(update_params[:id])
     task.update(completed: update_params[:completed])
     @list_all = update_params[:list_all] == 'true'
-    flash[:alert] = 'Task updated successfully'
+    flash[:success] = 'Task updated successfully'
     @tasks = @list_all ? Task.all.order(:id) : Task.not_completed.order(:id)
   end
 

@@ -16,18 +16,20 @@
       %td
         %strong= task.title
         .text-secondary= task.sub_title
-      - if task.priority == 'low_priority'
+      - priority = task&.priority
+      - if priority == 'low_priority'
         - priority_class = 'bg-success'
-      - elsif task.priority == 'medium_priority'
+      - elsif priority == 'medium_priority'
         - priority_class = 'bg-warning'
-      - elsif task.priority == 'high_priority'
+      - elsif priority == 'high_priority'
         - priority_class = 'bg-danger'
       - else
-        - priority_class = 'bg-light'
+        - priority_class = 'bg-light text-dark'
       %td
-        .badge{class: priority_class, data: {priority: "#{task.priority_before_type_cast}"}}= task.priority.titleize.upcase
+        .badge{class: priority_class, data: {priority: "#{task&.priority_before_type_cast}"}, style: "font-size: 1.0rem;"}
+          = task&.priority&.titleize&.upcase || 'NO PRIORITY SET'
       %td
-        .badge.bg-light.text-dark
+        .badge.bg-light.text-dark{style: "font-size: 1.0rem;"}
           .bi.bi-clock &nbsp &nbsp #{task.due_date&.localtime&.strftime('%a, %d %b %Y,%l:%M:%p')}
       %td
         = link_to 'Show', task, class: 'btn btn-primary btn-sm'
