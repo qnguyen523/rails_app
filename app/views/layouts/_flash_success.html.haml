@@ -1,0 +1,7 @@
+.text-center
+  - flash.each do |type, msg|
+    .alert.alert-success= msg.html_safe
+:javascript
+  setTimeout(function() {
+    $('.alert').fadeOut('slow');
+  }, 1000);

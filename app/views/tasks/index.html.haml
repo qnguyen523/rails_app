@@ -1,0 +1,10 @@
+.container
+  .row
+    %header
+      %h1{style: "font-size: 3.5rem;"} Tasks
+  .row#flash
+  .row
+    .col-lg-12
+      .no_class
+        %table.table.project-list-table.table-nowrap.align-middle.table-borderless#js-list-table
+          = render 'list_table', list_all: false

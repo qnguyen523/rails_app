@@ -1,0 +1,58 @@
+%thead
+  %tr
+    %th Completed
+    %th ID
+    %th Title
+    %th Priority
+    %th Due Date
+    %th Actions
+%tbody
+  - disable_checkbox = local_assigns[:disable_checkbox]
+  - list_all = local_assigns[:list_all]
+  - @tasks.each do |task|
+    %tr
+      %td=check_box_tag("task_#{task.id}", true, task.completed, disabled: disable_checkbox)
+      %td= task.id
+      %td
+        %strong= task.title
+        .text-secondary= task.sub_title
+      - if task.priority == 'low_priority'
+        - priority_class = 'bg-success'
+      - elsif task.priority == 'medium_priority'
+        - priority_class = 'bg-warning'
+      - elsif task.priority == 'high_priority'
+        - priority_class = 'bg-danger'
+      - else
+        - priority_class = 'bg-light'
+      %td
+        .badge{class: priority_class, data: {priority: "#{task.priority_before_type_cast}"}}= task.priority.titleize.upcase
+      %td
+        .badge.bg-light.text-dark
+          .bi.bi-gem
+          -# = task.due_date&.localtime&.strftime('%a, %d %b %Y,%l:%M:%p')
+      %td
+        = link_to 'Show', task, class: 'btn btn-primary btn-sm'
+
+:javascript
+  $(document).ready(() => {
+    $('#js-list-table input[type=checkbox]').on('change', function(e) {
+      e.preventDefault();
+      let id = $(this).attr('id').split('_')[1];
+      let completed = $(this).is(':checked');
+      list_all = #{list_all};
+      if (completed || list_all) {
+        url = list_all ? '/tasks/' + id + '?list_all=true' : '/tasks/' + id;
+        $.ajax({
+          url: url,
+          type: 'PATCH',
+          headers: {
+            'X-CSRF-Token': "#{form_authenticity_token.to_s}"
+          },
+          data: { completed: completed },
+          success: function(data) {
+            // console.log(data);
+          }
+        });
+      }
+    });
+  });
