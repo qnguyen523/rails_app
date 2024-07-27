@@ -26,8 +26,8 @@
       - else
         - priority_class = 'bg-light text-dark'
       %td
-        .badge{class: priority_class, data: {priority: "#{task&.priority_before_type_cast}"}, style: "font-size: 1.0rem;"}
-          = task&.priority&.titleize&.upcase || 'NO PRIORITY SET'
+        .badge{class: priority_class, style: "font-size: 1.0rem;"}
+          = priority&.titleize&.upcase || 'NO PRIORITY SET'
       %td
         .badge.bg-light.text-dark{style: "font-size: 1.0rem;"}
           .bi.bi-clock &nbsp &nbsp #{task.due_date&.localtime&.strftime('%a, %d %b %Y,%l:%M:%p')}

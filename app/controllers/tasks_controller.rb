@@ -2,49 +2,43 @@
 
 class TasksController < ApplicationController
   protect_from_forgery with: :null_session
-
+  before_action :set_service
   def new
     @task = Task.new
   end
 
   def create
-    new_attributes = {
-      title: create_params[:title].presence,
-      sub_title: create_params[:sub_title].presence,
-      due_date: create_params[:due_date]&.to_datetime&.localtime&.end_of_day || Time.now.end_of_day,
-      priority: create_params[:priority]
-    }
-    task = Task.new(new_attributes)
-    if task.save
+    task = @service.create(create_params)
+    errors = task.errors.full_messages
+    if errors.any?
+      flash[:error] = errors.join('<br>')
+      @task = task
+      render 'new'
+    else
       flash[:success] = 'Task created successfully'
       @tasks = Task.not_completed.order(:id)
       render 'index'
-    else
-      flash[:error] = 'Error creating task'
-      @task = task
-      render 'new'
     end
   end
 
   def index
-    @tasks = Task.not_completed.order(:id)
+    @tasks = @service.index
     render 'index'
   end
 
   def list
-    @tasks = Task.all.order(:id)
+    @tasks = @service.list
     render 'list'
   end
 
   def show
-    @task = Task.find(params[:id])
+    @task = @service.show(params.permit(:id)[:id])
   end
 
   def edit; end
 
   def update
-    task = Task.find(update_params[:id])
-    task.update(completed: update_params[:completed])
+    @service.update(update_params)
     @list_all = update_params[:list_all] == 'true'
     flash[:success] = 'Task updated successfully'
     @tasks = @list_all ? Task.all.order(:id) : Task.not_completed.order(:id)
@@ -58,5 +52,9 @@ class TasksController < ApplicationController
 
   def update_params
     params.permit(:id, :completed, :list_all)
+  end
+
+  def set_service
+    @service = TasksService.new
   end
 end
