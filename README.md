@@ -1,24 +1,19 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+# Tech Stack
+* **Site:** Ruby on Rails, HAML
+* **UI:** jQuery, BootStrap, CSS.
+* **Database:** PostgreSQL
+* **Unit Tests:** rspec
 
-Things you may want to cover:
+# System dependencies
+* Ruby version: 2.7.8p225
+* Rails version: 7.0.8.4
+* PostgreSQL version: 14.12
 
-* Ruby version
+# How to run the application
+* bundle install
+* rails s
 
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+# How to run the test suite
+bundle exec rspec
