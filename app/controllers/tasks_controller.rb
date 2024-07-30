@@ -31,6 +31,19 @@ class TasksController < ApplicationController
     render 'list'
   end
 
+  def destroy
+    id = params.permit(:id)[:id]
+    task = Task.find(id)
+    task.destroy
+    flash[:success] = 'Task deleted successfully' if task.destroyed?
+    @list_all = true
+    @tasks = Task.not_completed.order(:id)
+    respond_to do |format|
+      format.js { render 'destroy' }
+      format.html { render 'list' }
+    end
+  end
+
   def show
     @task = @service.show(params.permit(:id)[:id])
   end
