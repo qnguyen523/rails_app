@@ -32,7 +32,8 @@
         .badge.bg-light.text-dark{style: "font-size: 1.0rem;"}
           .bi.bi-clock &nbsp &nbsp #{task.due_date&.localtime&.strftime('%a, %d %b %Y,%l:%M:%p')}
       %td
-        = link_to 'Show', task, class: 'btn btn-primary btn-sm'
+        = link_to 'Show', task_path(id: task.id), class: 'btn btn-primary btn-sm'
+        = link_to 'Delete', task_path(id: task.id), method: :delete, class: 'btn btn-danger btn-sm', id: 'delete_link', :confirm => 'Are you sure?' if list_all
 
 :javascript
   $(document).ready(() => {
@@ -55,5 +56,19 @@
           }
         });
       }
+    });
+    $('#js-list-table #delete_link').off('click').on('click', function(e) {
+      e.preventDefault();
+      let url = $(this).attr('href');
+      $.ajax({
+        url: url,
+        type: 'DELETE',
+        headers: {
+          'X-CSRF-Token': "#{form_authenticity_token.to_s}"
+        },
+        success: function(data) {
+          // console.log(data);
+        }
+      });
     });
   });
