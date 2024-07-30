@@ -104,10 +104,12 @@ GEM
       sprockets (> 3.0)
       sprockets-rails
       tilt
+    database_cleaner (1.8.5)
     date (3.3.4)
     debug (1.9.2)
       irb (~> 1.10)
       reline (>= 0.3.8)
+    diff-lcs (1.5.1)
     erubi (1.13.0)
     execjs (2.9.1)
     globalid (1.2.1)
@@ -209,6 +211,23 @@ GEM
       io-console (~> 0.5)
     rexml (3.3.2)
       strscan
+    rspec-core (3.13.0)
+      rspec-support (~> 3.13.0)
+    rspec-expectations (3.13.1)
+      diff-lcs (>= 1.2.0, < 2.0)
+      rspec-support (~> 3.13.0)
+    rspec-mocks (3.13.1)
+      diff-lcs (>= 1.2.0, < 2.0)
+      rspec-support (~> 3.13.0)
+    rspec-rails (6.1.3)
+      actionpack (>= 6.1)
+      activesupport (>= 6.1)
+      railties (>= 6.1)
+      rspec-core (~> 3.13)
+      rspec-expectations (~> 3.13)
+      rspec-mocks (~> 3.13)
+      rspec-support (~> 3.13)
+    rspec-support (3.13.1)
     rubyzip (2.3.2)
     sass-embedded (1.63.6-arm64-darwin)
       google-protobuf (~> 3.23)
@@ -269,6 +288,7 @@ DEPENDENCIES
   byebug
   capybara
   dartsass-sprockets
+  database_cleaner
   debug
   hamlit
   importmap-rails
@@ -278,6 +298,7 @@ DEPENDENCIES
   puma (~> 5.0)
   rails (~> 7.0.7, >= 7.0.7.2)
   redis (~> 4.0)
+  rspec-rails (>= 6.0)
   selenium-webdriver
   sprockets-rails
   stimulus-rails
