@@ -37,7 +37,7 @@ class TasksController < ApplicationController
     task.destroy
     flash[:success] = 'Task deleted successfully' if task.destroyed?
     @list_all = true
-    @tasks = Task.not_completed.order(:id)
+    @tasks = Task.all.order(:id)
     respond_to do |format|
       format.js { render 'destroy' }
       format.html { render 'list' }
